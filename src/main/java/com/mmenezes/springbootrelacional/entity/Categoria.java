@@ -1,11 +1,14 @@
 package com.mmenezes.springbootrelacional.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -21,7 +24,14 @@ public class Categoria implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	private Categoria() {}
+	//uma categoria tem uma lista de produto 1...*
+	//O mapeamento de N to N com tabela associativa (PRODUTO_CATEGORIA) entre essas tabelas (Produto e Categoria)
+	//ja foi realizado no objeto Produto, para nao precisar repetir, 
+	//basta referenciar que já foi mapeado com mappedBy=<atributo da outra classe que foi realizado o mapeamneto>
+	@ManyToMany(mappedBy="listCategorias")
+	private List<Produto> listProdutos = new ArrayList<>();
+	
+	public Categoria() {}
 
 	public Categoria(Integer id, String nome) {
 		super();
@@ -68,6 +78,14 @@ public class Categoria implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<Produto> getListProdutos() {
+		return listProdutos;
+	}
+
+	public void setListProdutos(List<Produto> listProdutos) {
+		this.listProdutos = listProdutos;
 	}
 
 	
