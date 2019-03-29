@@ -13,6 +13,8 @@ import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Produto implements Serializable{
 	
@@ -33,6 +35,8 @@ public class Produto implements Serializable{
 	// name => nome da tabela associativa
 	// joinColums => nome da coluna que tera a chave primaria desta tabela (sempre sera da classe origiem )
 	// inverseJoinColums => nome da coluna da outra tabela que será referenciada
+	//@JsonIgnore- para evitar a referencia ciclica
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name= "PRODUTO_CATEGORIA",
 			joinColumns = @JoinColumn(name= "produto_id"), 
